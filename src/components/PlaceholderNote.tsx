@@ -1,4 +1,6 @@
-type Props = { children: string };
+import type { ReactNode } from "react";
+
+type Props = { children: ReactNode };
 
 /**
  * Clearly marks content that still needs confirmation from the client,
