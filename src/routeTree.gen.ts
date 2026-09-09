@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AyurvedaRouteImport } from './routes/ayurveda'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DoctorsRouteImport } from './routes/doctors'
+import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as KeralaRouteImport } from './routes/kerala'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AyurvedaRoute = AyurvedaRouteImport.update({
+  id: '/ayurveda',
+  path: '/ayurveda',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorsRoute = DoctorsRouteImport.update({
+  id: '/doctors',
+  path: '/doctors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JourneyRoute = JourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KeralaRoute = KeralaRouteImport.update({
+  id: '/kerala',
+  path: '/kerala',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/ayurveda': typeof AyurvedaRoute
+  '/contact': typeof ContactRoute
+  '/doctors': typeof DoctorsRoute
+  '/journey': typeof JourneyRoute
+  '/kerala': typeof KeralaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/ayurveda': typeof AyurvedaRoute
+  '/contact': typeof ContactRoute
+  '/doctors': typeof DoctorsRoute
+  '/journey': typeof JourneyRoute
+  '/kerala': typeof KeralaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/ayurveda': typeof AyurvedaRoute
+  '/contact': typeof ContactRoute
+  '/doctors': typeof DoctorsRoute
+  '/journey': typeof JourneyRoute
+  '/kerala': typeof KeralaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/ayurveda'
+    | '/contact'
+    | '/doctors'
+    | '/journey'
+    | '/kerala'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/ayurveda'
+    | '/contact'
+    | '/doctors'
+    | '/journey'
+    | '/kerala'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/ayurveda'
+    | '/contact'
+    | '/doctors'
+    | '/journey'
+    | '/kerala'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AyurvedaRoute: typeof AyurvedaRoute
+  ContactRoute: typeof ContactRoute
+  DoctorsRoute: typeof DoctorsRoute
+  JourneyRoute: typeof JourneyRoute
+  KeralaRoute: typeof KeralaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ayurveda': {
+      id: '/ayurveda'
+      path: '/ayurveda'
+      fullPath: '/ayurveda'
+      preLoaderRoute: typeof AyurvedaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctors': {
+      id: '/doctors'
+      path: '/doctors'
+      fullPath: '/doctors'
+      preLoaderRoute: typeof DoctorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journey': {
+      id: '/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kerala': {
+      id: '/kerala'
+      path: '/kerala'
+      fullPath: '/kerala'
+      preLoaderRoute: typeof KeralaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AyurvedaRoute: AyurvedaRoute,
+  ContactRoute: ContactRoute,
+  DoctorsRoute: DoctorsRoute,
+  JourneyRoute: JourneyRoute,
+  KeralaRoute: KeralaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
