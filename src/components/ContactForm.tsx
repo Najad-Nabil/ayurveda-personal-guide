@@ -85,13 +85,27 @@ export function ContactForm() {
 
   const validate = () => {
     const next: Partial<Record<keyof Values, string>> = {};
-    if (values.name.trim().length < 2) next.name = "Please tell us your name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email)) next.email = "Please enter a valid email address.";
-    if (values.phone && !isValidPhoneNumber(values.phone)) {
-      next.phone = "Please enter a valid phone number.";
-    }
-    if (values.message.trim().length < 10) next.message = "Please add a little detail so we can help you properly.";
-    if (!values.consent) next.consent = "Please confirm we may reply to your enquiry.";
+
+    if (values.name.trim().length < 2)
+      next.name = "Please tell us your name.";
+
+    if (
+      !values.email.trim() ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email)
+    )
+      next.email = "Please enter a valid email address.";
+
+    if (!values.country)
+      next.country = "Please select your country.";
+
+    if (!values.phone)
+      next.phone = "Please enter your WhatsApp number.";
+    else if (!isValidPhoneNumber(values.phone))
+      next.phone = "Please enter a valid WhatsApp number.";
+
+    if (!values.consent)
+      next.consent = "Please confirm we may reply to your enquiry.";
+
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -146,6 +160,17 @@ export function ContactForm() {
     }
   };
 
+
+  const onWhatsApp = () => {
+    if (!validate()) return;
+
+    window.open(
+      whatsappLink(summarise(values).trim()),
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   return (
     <form onSubmit={onSubmit} noValidate className="rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
       <div className="grid gap-5 sm:grid-cols-2">
@@ -172,7 +197,10 @@ export function ContactForm() {
             value={values.country}
             onChange={set("country")}
             autoComplete="country-name"
+            required
+            aria-describedby={errors.country ? "e-country" : undefined}
           >
+
             <option value="">Select your country</option>
 
             {countryOptions.map(([code, name]) => (
@@ -181,6 +209,13 @@ export function ContactForm() {
               </option>
             ))}
           </select>
+
+            {errors.country ? (
+              <p id="e-country" className="mt-2 text-xs text-destructive">
+                {errors.country}
+              </p>
+            ) : null}
+
         </div>
         <div>
           <label className={labelClass} htmlFor="f-email">
@@ -210,6 +245,11 @@ export function ContactForm() {
                 phone: value || "",
               }))
             }
+            onKeyDown={(e: React.KeyboardEvent) => {
+              if (e.key === " ") {
+                e.preventDefault();
+              }
+            }}
             className={`mt-2 ${fieldClass}`}
             aria-describedby={errors.phone ? "e-phone" : undefined}
           />
@@ -262,13 +302,13 @@ export function ContactForm() {
           <label className={labelClass} htmlFor="f-message">
             Additional message
           </label>
-          <textarea id="f-message" rows={5} className={`${fieldClass} mt-2 resize-y`} value={values.message} onChange={set("message")} required
-            aria-describedby={errors.message ? "e-message" : undefined} />
-          {errors.message ? (
-            <p id="e-message" className="mt-2 text-xs text-destructive">
-              {errors.message}
-            </p>
-          ) : null}
+          <textarea
+            id="f-message"
+            rows={5}
+            className={`${fieldClass} mt-2 resize-y`}
+            value={values.message}
+            onChange={set("message")}
+          />
         </div>
       </div>
 
@@ -303,15 +343,15 @@ export function ContactForm() {
           <Mail className="h-4 w-4" aria-hidden="true" />
           {status === "sending" ? "Sending…" : "Send my enquiry"}
         </Button>
-        <ButtonAnchor
+        <Button
+          type="button"
           variant="outline"
           size="lg"
-          href={whatsappLink(summarise(values).trim() || undefined)}
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={onWhatsApp}
         >
-          <MessageCircle className="h-4 w-4" aria-hidden="true" /> Send on WhatsApp instead
-        </ButtonAnchor>
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          Send on WhatsApp instead
+        </Button>
       </div>
 
       <p aria-live="polite" className="mt-4 text-sm text-muted-foreground">
