@@ -84,31 +84,51 @@ export function ContactForm() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (values.website) return; // silent spam drop
+    if (values.website) return;
 
     if (!validate()) return;
 
     setStatus("sending");
 
-    const body = summarise(values);
+    try {
+      const formData = new FormData();
 
-    if (FORM_ENDPOINT) {
-      try {
-        await fetch(FORM_ENDPOINT, {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(values),
-        });
-      } catch {
-      /* fall through to email */
-      }
-    } else {
-      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+      formData.append("access_key", "94cd98b9-9a50-4e41-a148-0077cf04b240");
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("country", values.country);
+      formData.append("phone", values.phone);
+      formData.append("period", values.period);
+      formData.append("duration", values.duration);
+      formData.append("reason", values.reason);
+      formData.append("programme", values.programme);
+      formData.append("message", values.message);
+
+      formData.append(
+        "subject",
         `Ayurveda enquiry — ${values.name}`,
-      )}&body=${encodeURIComponent(body)}`;
-    }
+      );
 
-    setStatus("sent");
+      const response = await fetch(
+        "https://api.web3forms.com/submit",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || "Submission failed");
+      }
+
+      setStatus("sent");
+      setValues(initial);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setStatus("idle");
+    }
   };
 
   return (
