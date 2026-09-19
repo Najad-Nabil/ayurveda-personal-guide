@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Mail, MessageCircle } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { Section } from "@/components/Section";
 import { CtaBand } from "@/components/CtaBand";
 import { JourneyStep } from "@/components/Cards";
-import { journeySteps } from "@/data/siteData";
+import { ButtonAnchor } from "@/components/Button";
+import { emailLink, journeySteps, whatsappLink } from "@/data/siteData";
 
 export const Route = createFileRoute("/journey")({
   head: () => ({
@@ -47,10 +49,34 @@ function JourneyPage() {
         <div className="max-w-2xl">
           <h2 className="text-3xl sm:text-4xl">What stays in your hands</h2>
           <p className="mt-5 text-sm leading-relaxed text-secondary-foreground/75">
-            Your flights, your travel insurance and your own medical decisions remain yours. Everything on
-            the Kerala side — the doctor, the centre, the programme, accommodation, transfers and daily
-            support — is coordinated for you.
+            Your flights, your travel insurance and your own medical decisions remain yours.
+            Everything on the Kerala side — the doctor, the centre, the programme, accommodation,
+            transfers and daily support — is coordinated for you.
           </p>
+        </div>
+      </Section>
+
+      <Section size="md">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl sm:text-4xl">Ready to begin?</h2>
+          <p className="mt-5 text-sm leading-relaxed text-secondary-foreground/75">
+            Send a message on WhatsApp or email, and tell me a little about the journey you have in
+            mind.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <ButtonAnchor
+              variant="whatsapp"
+              size="lg"
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp
+            </ButtonAnchor>
+            <ButtonAnchor variant="outline" size="lg" href={emailLink}>
+              <Mail className="h-4 w-4" aria-hidden="true" /> Email
+            </ButtonAnchor>
+          </div>
         </div>
       </Section>
 

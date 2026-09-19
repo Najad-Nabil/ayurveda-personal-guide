@@ -12,9 +12,9 @@ export const site = {
   tagline: "Authentic Ayurveda in Kerala, personally arranged for you",
   location: "Kerala, India",
   founderName: "[FOUNDER NAME]",
-  phone: "[PHONE]",
+  phone: "+91 92920 02612",
   /** Digits only, international format, no + or spaces. e.g. 919999999999 */
-  whatsappNumber: "[WHATSAPP]",
+  whatsappNumber: "919292002612",
   email: "[EMAIL]",
   instagramUrl: "[INSTAGRAM URL]",
   facebookUrl: "[FACEBOOK URL]",
