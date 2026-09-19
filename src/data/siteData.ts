@@ -15,7 +15,7 @@ export const site = {
   phone: "+91 92920 02612",
   /** Digits only, international format, no + or spaces. e.g. 919999999999 */
   whatsappNumber: "919292002612",
-  email: "[EMAIL]",
+  email: "najadnabil2006@gmail.com",
   instagramUrl: "[INSTAGRAM URL]",
   facebookUrl: "[FACEBOOK URL]",
 };

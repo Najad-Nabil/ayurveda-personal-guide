@@ -52,9 +52,6 @@ function ContactPage() {
                   </span>
                   <span className="min-w-0">
                     <span className="block text-sm font-semibold">WhatsApp</span>
-                    <span className="block truncate text-sm text-muted-foreground">
-                      {site.whatsappNumber}
-                    </span>
                   </span>
                 </a>
               </li>

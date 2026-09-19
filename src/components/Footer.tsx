@@ -45,7 +45,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-primary-foreground/85 hover:text-primary-foreground"
               >
-                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" /> WhatsApp {site.whatsappNumber}
+                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" /> WhatsApp
               </a>
             </li>
             <li>
