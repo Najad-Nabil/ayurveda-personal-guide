@@ -2,6 +2,12 @@ import { useState } from "react";
 import { MessageCircle, Mail } from "lucide-react";
 import { Button, ButtonAnchor } from "./Button";
 import { programmeOptions, site, whatsappLink } from "@/data/siteData";
+import PhoneInput, {
+  isValidPhoneNumber,
+} from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import countries from "i18n-iso-countries";
+import enLocale from "i18n-iso-countries/langs/en.json";
 
 /**
  * Enquiry form with no backend and no stored data.
@@ -60,6 +66,12 @@ function summarise(v: Values) {
   ].join("\n");
 }
 
+countries.registerLocale(enLocale);
+
+const countryOptions = Object.entries(
+  countries.getNames("en", { select: "official" })
+).sort(([, a], [, b]) => a.localeCompare(b));
+
 export function ContactForm() {
   const [values, setValues] = useState<Values>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof Values, string>>>({});
@@ -75,6 +87,9 @@ export function ContactForm() {
     const next: Partial<Record<keyof Values, string>> = {};
     if (values.name.trim().length < 2) next.name = "Please tell us your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email)) next.email = "Please enter a valid email address.";
+    if (values.phone && !isValidPhoneNumber(values.phone)) {
+      next.phone = "Please enter a valid phone number.";
+    }
     if (values.message.trim().length < 10) next.message = "Please add a little detail so we can help you properly.";
     if (!values.consent) next.consent = "Please confirm we may reply to your enquiry.";
     setErrors(next);
@@ -150,7 +165,22 @@ export function ContactForm() {
           <label className={labelClass} htmlFor="f-country">
             Country
           </label>
-          <input id="f-country" className={`${fieldClass} mt-2`} value={values.country} onChange={set("country")} autoComplete="country-name" />
+
+          <select
+            id="f-country"
+            className={`${fieldClass} mt-2`}
+            value={values.country}
+            onChange={set("country")}
+            autoComplete="country-name"
+          >
+            <option value="">Select your country</option>
+
+            {countryOptions.map(([code, name]) => (
+              <option key={code} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className={labelClass} htmlFor="f-email">
@@ -168,7 +198,27 @@ export function ContactForm() {
           <label className={labelClass} htmlFor="f-phone">
             WhatsApp / Phone
           </label>
-          <input id="f-phone" type="tel" className={`${fieldClass} mt-2`} value={values.phone} onChange={set("phone")} autoComplete="tel" />
+
+          <PhoneInput
+            id="f-phone"
+            international
+            defaultCountry="CZ"
+            value={values.phone}
+            onChange={(value) =>
+              setValues((v) => ({
+                ...v,
+                phone: value || "",
+              }))
+            }
+            className={`mt-2 ${fieldClass}`}
+            aria-describedby={errors.phone ? "e-phone" : undefined}
+          />
+
+          {errors.phone ? (
+            <p id="e-phone" className="mt-2 text-xs text-destructive">
+              {errors.phone}
+            </p>
+          ) : null}
         </div>
         <div>
           <label className={labelClass} htmlFor="f-period">
