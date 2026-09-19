@@ -222,9 +222,17 @@ export function ContactForm() {
         </div>
         <div>
           <label className={labelClass} htmlFor="f-period">
-            Preferred travel period
+            Preferred travel date
           </label>
-          <input id="f-period" className={`${fieldClass} mt-2`} placeholder="e.g. January–February 2027" value={values.period} onChange={set("period")} />
+
+          <input
+            id="f-period"
+            type="date"
+            className={`${fieldClass} mt-2`}
+            value={values.period}
+            onChange={set("period")}
+            min={new Date().toISOString().split("T")[0]}
+          />
         </div>
         <div>
           <label className={labelClass} htmlFor="f-duration">
