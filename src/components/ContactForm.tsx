@@ -83,27 +83,31 @@ export function ContactForm() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (values.website) return; // silent spam drop
+
     if (!validate()) return;
 
     setStatus("sending");
+
     const body = summarise(values);
 
     if (FORM_ENDPOINT) {
       try {
         await fetch(FORM_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(values),
         });
       } catch {
-        /* fall through to email */
+      /* fall through to email */
       }
     } else {
       window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
         `Ayurveda enquiry — ${values.name}`,
       )}&body=${encodeURIComponent(body)}`;
     }
+
     setStatus("sent");
   };
 
