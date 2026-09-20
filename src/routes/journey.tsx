@@ -56,29 +56,7 @@ function JourneyPage() {
         </div>
       </Section>
 
-      <Section size="md">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl">Ready to begin?</h2>
-          <p className="mt-5 text-sm leading-relaxed text-secondary-foreground/75">
-            Send a message on WhatsApp or email, and tell me a little about the journey you have in
-            mind.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonAnchor
-              variant="whatsapp"
-              size="lg"
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp
-            </ButtonAnchor>
-            <ButtonAnchor variant="outline" size="lg" href={emailLink}>
-              <Mail className="h-4 w-4" aria-hidden="true" /> Email
-            </ButtonAnchor>
-          </div>
-        </div>
-      </Section>
+      
 
       <CtaBand
         title="Ready for step one?"
